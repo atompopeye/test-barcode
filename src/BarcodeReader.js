@@ -52,7 +52,11 @@ const BarcodeReader = () => {
       Quagga.onProcessed((result) => {
         console.log('Processed result:', result);
       });
-      Quagga.onDetected(__onDetected);
+      Quagga.onDetected((data) => {
+        console.log('Detected barcode:', data);
+        setCode(data.codeResult.code);
+        stopReader();
+      });
     });
   };
 
@@ -62,11 +66,11 @@ const BarcodeReader = () => {
     Quagga.stop();
   };
 
-  const __onDetected = (data) => {
-    console.log('Detected barcode:', data);
-    setCode(data.codeResult.code);
-    stopReader();
-  };
+  // const __onDetected = (data) => {
+  //   console.log('Detected barcode:', data);
+  //   setCode(data.codeResult.code);
+  //   stopReader();
+  // };
 
   const copyCode = () => {
     if (copy(code)) {
